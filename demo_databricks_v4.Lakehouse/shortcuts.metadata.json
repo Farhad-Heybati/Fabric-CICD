@@ -1,0 +1,41 @@
+[
+  {
+    "name": "sales_table",
+    "path": "/Tables/dbo",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/poc_aas/sales_table",
+        "itemId": "3744c08c-5bb0-993d-4e51-889914a2a448",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactType": "DatabricksCatalog"
+      }
+    }
+  },
+  {
+    "name": "products_table",
+    "path": "/Tables/dbo",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/poc_aas/products_table",
+        "itemId": "3744c08c-5bb0-993d-4e51-889914a2a448",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactType": "DatabricksCatalog"
+      }
+    }
+  },
+  {
+    "name": "customers_table",
+    "path": "/Tables/dbo",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/poc_aas/customers_table",
+        "itemId": "3744c08c-5bb0-993d-4e51-889914a2a448",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactType": "DatabricksCatalog"
+      }
+    }
+  }
+]

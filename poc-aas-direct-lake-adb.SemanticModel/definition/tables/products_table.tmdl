@@ -1,0 +1,256 @@
+table products_table
+	lineageTag: 6d20c970-b23f-463d-874e-3eb87cb6e7dd
+	sourceLineageTag: [dbo].[products_table]
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: b73cf2bb-a9bd-4236-9137-204b27cc1c4a
+		sourceLineageTag: ProductKey
+		summarizeBy: count
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductLabel
+		dataType: int64
+		formatString: 0
+		lineageTag: 83125e7a-63ff-4394-a348-4fca235ecb9e
+		sourceLineageTag: ProductLabel
+		summarizeBy: sum
+		sourceColumn: ProductLabel
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: c43ff610-917b-4f84-9cd6-03675c2329bb
+		sourceLineageTag: ProductName
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductDescription
+		dataType: string
+		lineageTag: d4da22a3-2bc2-4276-9887-93f3dd0cf572
+		sourceLineageTag: ProductDescription
+		summarizeBy: none
+		sourceColumn: ProductDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductSubcategoryKey
+		dataType: string
+		lineageTag: ac143289-a3b9-40ca-be5f-0e90e3518ff4
+		sourceLineageTag: ProductSubcategoryKey
+		summarizeBy: none
+		sourceColumn: ProductSubcategoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		lineageTag: f28eaf75-58ba-4e2c-8186-121202d95b56
+		sourceLineageTag: Manufacturer
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column BrandName
+		dataType: string
+		lineageTag: 9bdd7447-e05e-4bec-aea8-84e803b44b3a
+		sourceLineageTag: BrandName
+		summarizeBy: none
+		sourceColumn: BrandName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClassID
+		dataType: string
+		lineageTag: cd76b39e-3ada-4df1-9975-4eaed75c6118
+		sourceLineageTag: ClassID
+		summarizeBy: none
+		sourceColumn: ClassID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClassName
+		dataType: string
+		lineageTag: 673c0edc-8090-48f5-9324-3d5e1d413cb6
+		sourceLineageTag: ClassName
+		summarizeBy: none
+		sourceColumn: ClassName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StyleID
+		dataType: string
+		lineageTag: 9c2db2b4-59c9-4fe6-9e9b-8e10e9136f79
+		sourceLineageTag: StyleID
+		summarizeBy: none
+		sourceColumn: StyleID
+
+		annotation SummarizationSetBy = Automatic
+
+	column StyleName
+		dataType: string
+		lineageTag: f24ef024-c354-417a-a9b9-5812b324f8e8
+		sourceLineageTag: StyleName
+		summarizeBy: none
+		sourceColumn: StyleName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ColorID
+		dataType: string
+		lineageTag: 480375ba-b3d4-4f19-b8f9-25e1bf18a9ac
+		sourceLineageTag: ColorID
+		summarizeBy: none
+		sourceColumn: ColorID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ColorName
+		dataType: string
+		lineageTag: 997fb297-1db3-419c-b4e7-41f3a508812c
+		sourceLineageTag: ColorName
+		summarizeBy: none
+		sourceColumn: ColorName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Size
+		dataType: string
+		lineageTag: d2d4a0cd-028a-4642-b886-e600d213f797
+		sourceLineageTag: Size
+		summarizeBy: none
+		sourceColumn: Size
+
+		annotation SummarizationSetBy = Automatic
+
+	column SizeRange
+		dataType: string
+		lineageTag: cdc5adb0-9077-4f0f-8164-6e80f5f61244
+		sourceLineageTag: SizeRange
+		summarizeBy: none
+		sourceColumn: SizeRange
+
+		annotation SummarizationSetBy = Automatic
+
+	column SizeUnitMeasureID
+		dataType: string
+		lineageTag: babcc154-399f-4b8c-a7c2-6cd3326df5cb
+		sourceLineageTag: SizeUnitMeasureID
+		summarizeBy: none
+		sourceColumn: SizeUnitMeasureID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weight
+		dataType: string
+		lineageTag: af552ccb-eda3-407e-ae3b-abbcd497480a
+		sourceLineageTag: Weight
+		summarizeBy: none
+		sourceColumn: Weight
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeightUnitMeasureID
+		dataType: string
+		lineageTag: a8b91dba-f4f9-46da-88eb-56c602c73f64
+		sourceLineageTag: WeightUnitMeasureID
+		summarizeBy: none
+		sourceColumn: WeightUnitMeasureID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitOfMeasureID
+		dataType: string
+		lineageTag: 92c502d7-7c39-44ae-aea9-9b604a7b3753
+		sourceLineageTag: UnitOfMeasureID
+		summarizeBy: none
+		sourceColumn: UnitOfMeasureID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitOfMeasureName
+		dataType: string
+		lineageTag: 14c05d99-1060-45bd-9eac-e51247e1edd0
+		sourceLineageTag: UnitOfMeasureName
+		summarizeBy: none
+		sourceColumn: UnitOfMeasureName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StockTypeID
+		dataType: string
+		lineageTag: f3178480-5701-4b7a-8ba6-15a52e4f6bda
+		sourceLineageTag: StockTypeID
+		summarizeBy: none
+		sourceColumn: StockTypeID
+
+		annotation SummarizationSetBy = Automatic
+
+	column StockTypeName
+		dataType: string
+		lineageTag: 3300b481-a7cc-496c-8c0f-075b6d07858d
+		sourceLineageTag: StockTypeName
+		summarizeBy: none
+		sourceColumn: StockTypeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitCost
+		dataType: string
+		lineageTag: fc021f51-f9eb-4462-851e-76637467ed6b
+		sourceLineageTag: UnitCost
+		summarizeBy: none
+		sourceColumn: UnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: string
+		lineageTag: 1fae88d7-14eb-4976-8c8f-ba88e44f42cf
+		sourceLineageTag: UnitPrice
+		summarizeBy: none
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvailableForSaleDate
+		dataType: string
+		lineageTag: a0179d4a-ff8a-486c-82df-34f4a280a39d
+		sourceLineageTag: AvailableForSaleDate
+		summarizeBy: none
+		sourceColumn: AvailableForSaleDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column StopSaleDate
+		dataType: string
+		lineageTag: 7be0b82e-17a0-4219-b243-1c4c31c371e4
+		sourceLineageTag: StopSaleDate
+		summarizeBy: none
+		sourceColumn: StopSaleDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: f4c7d236-5e7e-41fd-b850-a603a74d4b1e
+		sourceLineageTag: Status
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition products_table = entity
+		mode: directLake
+		source
+			entityName: products_table
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+

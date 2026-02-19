@@ -1,0 +1,8 @@
+relationship 6a8db000-f910-f850-df9c-75d0c6a302cc
+	fromColumn: sales_table.CustomerKey
+	toColumn: customers_table.CustomerKey
+
+relationship b4b87ef3-7053-d5db-9e4b-e6af1165028d
+	fromColumn: sales_table.ProductKey
+	toColumn: products_table.ProductKey
+

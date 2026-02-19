@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "poc-aas-direct-lake-adb-v5"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9507502d-7785-8961-4200-12569bd1889f"
+  }
+}

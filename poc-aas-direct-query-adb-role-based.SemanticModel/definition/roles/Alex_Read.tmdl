@@ -1,0 +1,7 @@
+role Alex_Read
+	modelPermission: read
+
+	tablePermission customers_table = [CustomerKey] < 100
+
+	annotation PBI_Id = 8fc9599d0f1a4faa90e61f9417dc4e5a
+

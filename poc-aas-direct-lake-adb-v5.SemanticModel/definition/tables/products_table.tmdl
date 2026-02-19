@@ -1,0 +1,174 @@
+table products_table
+	lineageTag: 26c49fda-f3b6-4047-93ee-deffa170d7c4
+	sourceLineageTag: [dbo].[products_table]
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 4085cba5-ba1e-42cb-9c3d-cef9eb3cea31
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+	column ProductLabel
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a1f2eb4-d99f-4d85-b011-ce80ba46f45f
+		summarizeBy: none
+		sourceColumn: ProductLabel
+
+	column ProductName
+		dataType: string
+		lineageTag: 19d76be0-78a1-443c-9991-c766e01e4836
+		summarizeBy: none
+		sourceColumn: ProductName
+
+	column ProductDescription
+		dataType: string
+		lineageTag: 059a0f5a-c080-4755-87a4-811567f5ca65
+		summarizeBy: none
+		sourceColumn: ProductDescription
+
+	column ProductSubcategoryKey
+		dataType: string
+		lineageTag: be5a5a84-a6f1-455a-b8f7-21a710e056fc
+		summarizeBy: none
+		sourceColumn: ProductSubcategoryKey
+
+	column Manufacturer
+		dataType: string
+		lineageTag: 2a8344cd-6b43-4396-9351-b420bcc93ef1
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+	column BrandName
+		dataType: string
+		lineageTag: 1b5b434e-0958-45ed-b701-26d7cfde0286
+		summarizeBy: none
+		sourceColumn: BrandName
+
+	column ClassID
+		dataType: string
+		lineageTag: fa583050-44b7-49de-9684-5f8b8b9296a6
+		summarizeBy: none
+		sourceColumn: ClassID
+
+	column ClassName
+		dataType: string
+		lineageTag: e52710ff-3006-472f-aec6-914fb0b14f18
+		summarizeBy: none
+		sourceColumn: ClassName
+
+	column StyleID
+		dataType: string
+		lineageTag: 604996fb-7d87-4497-8807-df9c06c1dcd6
+		summarizeBy: none
+		sourceColumn: StyleID
+
+	column StyleName
+		dataType: string
+		lineageTag: b75db7c8-e507-4e94-9604-77247f934714
+		summarizeBy: none
+		sourceColumn: StyleName
+
+	column ColorID
+		dataType: string
+		lineageTag: 9ef6568f-fb95-42b8-ae75-e488986f1e2c
+		summarizeBy: none
+		sourceColumn: ColorID
+
+	column ColorName
+		dataType: string
+		lineageTag: 79656f4f-cd86-4489-91f8-fa2ab238d085
+		summarizeBy: none
+		sourceColumn: ColorName
+
+	column Size
+		dataType: string
+		lineageTag: aba09c7d-a13f-446b-9daf-7d4eb9a96fda
+		summarizeBy: none
+		sourceColumn: Size
+
+	column SizeRange
+		dataType: string
+		lineageTag: 4fd5166d-a3fb-470a-8717-671955533f30
+		summarizeBy: none
+		sourceColumn: SizeRange
+
+	column SizeUnitMeasureID
+		dataType: string
+		lineageTag: 6db544b6-3ed1-4b06-a30b-b8724dbb36f0
+		summarizeBy: none
+		sourceColumn: SizeUnitMeasureID
+
+	column Weight
+		dataType: string
+		lineageTag: 12b1ba3a-8c1f-4958-974e-048a999cfa9f
+		summarizeBy: none
+		sourceColumn: Weight
+
+	column WeightUnitMeasureID
+		dataType: string
+		lineageTag: 1180fd80-cce7-4d2c-8859-dd796dd761f2
+		summarizeBy: none
+		sourceColumn: WeightUnitMeasureID
+
+	column UnitOfMeasureID
+		dataType: string
+		lineageTag: cb7bf742-577f-44c7-9577-5a6030e515d9
+		summarizeBy: none
+		sourceColumn: UnitOfMeasureID
+
+	column UnitOfMeasureName
+		dataType: string
+		lineageTag: db65ec61-3e6d-45d2-a2d3-ba57ac2b68dd
+		summarizeBy: none
+		sourceColumn: UnitOfMeasureName
+
+	column StockTypeID
+		dataType: string
+		lineageTag: 315bb363-9cef-4669-a84f-95ae58547353
+		summarizeBy: none
+		sourceColumn: StockTypeID
+
+	column StockTypeName
+		dataType: string
+		lineageTag: 4ad352f0-a207-4f3a-9dab-9e9473e9b6e5
+		summarizeBy: none
+		sourceColumn: StockTypeName
+
+	column UnitCost
+		dataType: string
+		lineageTag: 30a29891-749c-4f26-8f26-eb34ea065f15
+		summarizeBy: none
+		sourceColumn: UnitCost
+
+	column UnitPrice
+		dataType: string
+		lineageTag: fadb65f2-1cef-43b6-88ee-c466b0b5ea12
+		summarizeBy: none
+		sourceColumn: UnitPrice
+
+	column AvailableForSaleDate
+		dataType: string
+		lineageTag: 3e6cc496-9476-492f-8ccc-5361f7e8d665
+		summarizeBy: none
+		sourceColumn: AvailableForSaleDate
+
+	column StopSaleDate
+		dataType: string
+		lineageTag: 65a71d95-26d1-477e-9a95-0ccbdf11390b
+		summarizeBy: none
+		sourceColumn: StopSaleDate
+
+	column Status
+		dataType: string
+		lineageTag: cd1215f8-b69f-48d6-bd04-669c89f0eb3c
+		summarizeBy: none
+		sourceColumn: Status
+
+	partition products_table = entity
+		mode: directLake
+		source
+			entityName: products_table
+			expressionSource: DatabaseQuery
+

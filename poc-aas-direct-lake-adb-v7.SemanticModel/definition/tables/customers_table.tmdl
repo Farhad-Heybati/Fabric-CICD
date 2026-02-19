@@ -1,0 +1,176 @@
+table customers_table
+	lineageTag: 423c92ec-417e-45ba-bcaa-0b89fb55bbdd
+	sourceLineageTag: [dbo].[customers_table]
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: d6478e9f-9215-40e1-8f7f-7b16bda2a5a1
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+	column GeographyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 58508e32-1512-4eda-90d9-9cab5fdae5be
+		summarizeBy: none
+		sourceColumn: GeographyKey
+
+	column CustomerLabel
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f2614c5-fa76-4612-b485-8a9518237bf9
+		summarizeBy: none
+		sourceColumn: CustomerLabel
+
+	column Title
+		dataType: string
+		lineageTag: b0493d18-5425-4eda-bae2-b09c652a39a8
+		summarizeBy: none
+		sourceColumn: Title
+
+	column FirstName
+		dataType: string
+		lineageTag: 4d743639-70dc-409e-acff-93000131ec34
+		summarizeBy: none
+		sourceColumn: FirstName
+
+	column MiddleName
+		dataType: string
+		lineageTag: cf72d378-cf5d-4f6d-a9d0-9571c5587c45
+		summarizeBy: none
+		sourceColumn: MiddleName
+
+	column LastName
+		dataType: string
+		lineageTag: 6c635615-1690-49cc-bb24-1c3317547e42
+		summarizeBy: none
+		sourceColumn: LastName
+
+	column NameStyle
+		dataType: int64
+		formatString: 0
+		lineageTag: bf5ce0f3-799c-42c0-8432-2b625dea7b3c
+		summarizeBy: none
+		sourceColumn: NameStyle
+
+	column BirthDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: dfc56aea-e4e2-4d43-a25d-e29c72da61c1
+		summarizeBy: none
+		sourceColumn: BirthDate
+
+	column MaritalStatus
+		dataType: string
+		lineageTag: 4473b338-b8d4-41cf-bfec-67c7c2247be0
+		summarizeBy: none
+		sourceColumn: MaritalStatus
+
+	column Suffix
+		dataType: string
+		lineageTag: 0f318064-a8d6-437f-8b0e-c8e076bedfb8
+		summarizeBy: none
+		sourceColumn: Suffix
+
+	column Gender
+		dataType: string
+		lineageTag: 5ff53ac1-5658-4964-a97b-cfdc6e6d91cc
+		summarizeBy: none
+		sourceColumn: Gender
+
+	column EmailAddress
+		dataType: string
+		lineageTag: e7984813-3768-4982-a972-790bd670ddb8
+		summarizeBy: none
+		sourceColumn: EmailAddress
+
+	column YearlyIncome
+		dataType: double
+		lineageTag: 3505fd5d-4a6c-49c6-85aa-459a8c21a312
+		summarizeBy: none
+		sourceColumn: YearlyIncome
+
+	column TotalChildren
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a06c7d1-ab75-45ab-bfbb-54fd991ab09c
+		summarizeBy: none
+		sourceColumn: TotalChildren
+
+	column NumberChildrenAtHome
+		dataType: int64
+		formatString: 0
+		lineageTag: d2c46312-8dcf-4d5d-8b74-4d651d8ac75d
+		summarizeBy: none
+		sourceColumn: NumberChildrenAtHome
+
+	column Education
+		dataType: string
+		lineageTag: e9d9a603-38df-4ded-9e56-1b72ffe69fc7
+		summarizeBy: none
+		sourceColumn: Education
+
+	column Occupation
+		dataType: string
+		lineageTag: 58160186-70df-43e5-9df1-5cb062fe32d7
+		summarizeBy: none
+		sourceColumn: Occupation
+
+	column HouseOwnerFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: 02c886d8-a817-43a3-9d21-26dd9e0d819a
+		summarizeBy: none
+		sourceColumn: HouseOwnerFlag
+
+	column NumberCarsOwned
+		dataType: int64
+		formatString: 0
+		lineageTag: 642bc12d-ca33-4ee1-9cb3-3d61218c9dff
+		summarizeBy: none
+		sourceColumn: NumberCarsOwned
+
+	column AddressLine1
+		dataType: string
+		lineageTag: 88d66e25-f011-42c4-b298-c128cc344708
+		summarizeBy: none
+		sourceColumn: AddressLine1
+
+	column AddressLine2
+		dataType: string
+		lineageTag: ecfd016b-2bfd-4059-92e0-601bbd2925da
+		summarizeBy: none
+		sourceColumn: AddressLine2
+
+	column Phone
+		dataType: string
+		lineageTag: 0156068c-12b5-4e2d-ab68-c37b4c41d17c
+		summarizeBy: none
+		sourceColumn: Phone
+
+	column DateFirstPurchase
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f14a81c1-92d4-492d-bf84-f4567eea5f32
+		summarizeBy: none
+		sourceColumn: DateFirstPurchase
+
+	column CustomerType
+		dataType: string
+		lineageTag: 8a76ad28-29c6-45f6-b492-4e10c2c72b10
+		summarizeBy: none
+		sourceColumn: CustomerType
+
+	column CompanyName
+		dataType: string
+		lineageTag: d1e180a6-bcf1-4fc5-83b0-859167daf413
+		summarizeBy: none
+		sourceColumn: CompanyName
+
+	partition customers_table = entity
+		mode: directLake
+		source
+			entityName: customers_table
+			expressionSource: DatabaseQuery
+

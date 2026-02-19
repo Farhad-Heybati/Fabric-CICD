@@ -1,0 +1,42 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {},
+  "name": "Dataflow 1",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "sales_table_v2": {
+      "queryId": "d5194088-a550-4e48-b236-86e26c54ee92",
+      "queryName": "sales_table_v2",
+      "loadEnabled": false
+    },
+    "products_table_v2": {
+      "queryId": "aa8f79a0-8861-4e41-864f-f92e6fd3ec9a",
+      "queryName": "products_table_v2",
+      "loadEnabled": false
+    },
+    "customers_table_v2": {
+      "queryId": "66b8f00a-4747-43fd-a86d-1fa96fbe6ba6",
+      "queryName": "customers_table_v2",
+      "loadEnabled": false
+    },
+    "DefaultDestination": {
+      "queryId": "291e096f-3b7b-46ea-bc54-2a9202e077e0",
+      "queryName": "DefaultDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"4362108c-613d-4b9b-9715-065a869f7ef7\",\"DatasourceId\":\"d6bc7547-ca4e-4fc4-b878-c062ec654448\"}"
+    },
+    {
+      "path": "{\"host\":\"adb-2658039321675167.7.azuredatabricks.net\",\"httpPath\":\"\\/sql\\/1.0\\/warehouses\\/c95c601b9e925b18\"}",
+      "kind": "Databricks",
+      "connectionId": "{\"ClusterId\":\"4362108c-613d-4b9b-9715-065a869f7ef7\",\"DatasourceId\":\"28c49138-be38-4d01-b1ce-7cf006b842ed\"}"
+    }
+  ]
+}

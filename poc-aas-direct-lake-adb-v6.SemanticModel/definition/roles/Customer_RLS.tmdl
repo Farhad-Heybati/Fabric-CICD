@@ -1,0 +1,7 @@
+role Customer_RLS
+	modelPermission: read
+
+	tablePermission customers_table = [CustomerKey] < 150
+
+	annotation PBI_Id = e77cce576a7c48d791ddb0101cd3d19f
+

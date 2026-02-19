@@ -1,0 +1,105 @@
+table sales_table
+	lineageTag: dea1cc8e-fec9-4524-b4b5-712b4b889cb2
+
+	column OnlineSalesKey
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 540b052b-197f-403f-b793-9c4a49965638
+		summarizeBy: count
+		sourceColumn: OnlineSalesKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 95b7979d-3b21-4cbd-94a9-66bca16005aa
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeliveryDate
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: edf47e43-f9fa-4024-b43f-9f96f860b9c4
+		summarizeBy: none
+		sourceColumn: DeliveryDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoreKey
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 6f5a9b89-feee-44c4-8047-44b27329c7bb
+		summarizeBy: count
+		sourceColumn: StoreKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: c81cd6c3-4a2d-4247-89fd-9ee79d24defb
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PromotionKey
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 5b9c42ae-c718-426e-adc2-6920a9f4295a
+		summarizeBy: count
+		sourceColumn: PromotionKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 64c6c375-1eac-441b-a9fe-69330b88e990
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderNumber
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: 6ec7dc4f-9c81-4092-8faf-fe4a135efbb7
+		summarizeBy: none
+		sourceColumn: SalesOrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderLineNumber
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 6acea29a-f6c7-42b1-8035-88ce396e4937
+		summarizeBy: sum
+		sourceColumn: SalesOrderLineNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sales_table = m
+		mode: directQuery
+		source =
+				let
+				    Source = Databricks.Catalogs("adb-2658039321675167.7.azuredatabricks.net", "/sql/1.0/warehouses/c95c601b9e925b18", [Catalog=null, Database=null, QueryTags=null, EnableAutomaticProxyDiscovery=null, Implementation=null]),
+				    demo_databricks_v3_Database = Source{[Name="demo_databricks_v3",Kind="Database"]}[Data],
+				    poc_aas_Schema = demo_databricks_v3_Database{[Name="poc_aas",Kind="Schema"]}[Data],
+				    sales_table_Table = poc_aas_Schema{[Name="sales_table",Kind="Table"]}[Data]
+				in
+				    sales_table_Table
+
+	annotation PBI_ResultType = Table
+

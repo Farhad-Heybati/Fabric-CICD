@@ -1,0 +1,10 @@
+expression DatabaseQuery =
+		let
+			source=AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/9d662f4d-ad03-4c16-82a4-8db29b422812/14a2a448-8899-4e51-993d-5bb03744c08c",[HierarchicalNavigation=true]),
+		    database = Sql.Database("NB2XZBXV2VCUTDNTXEESVRR3VQ-JUXWNHIDVULEZAVERWZJWQRICI.datawarehouse.fabric.microsoft.com", "afdc3206-4970-4365-a0d4-525353d8cfe6")
+		in
+		    source
+	lineageTag: 6573ec78-6bc8-4a93-bceb-9e31575b8c73
+
+	annotation PBI_IncludeFutureArtifacts = False
+

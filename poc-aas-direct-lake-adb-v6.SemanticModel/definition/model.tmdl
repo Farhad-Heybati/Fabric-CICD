@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	collation: Latin1_General_100_BIN2_UTF8
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["DatabaseQuery"]
+
+annotation PBI_ProTooling = ["SLL_DirectLakeMigration","SLL","SLL_UpdateDLConnection_SQL","WebModelingEdit"]
+
+ref table sales_table
+ref table products_table
+ref table customers_table
+
+ref role Customer_RLS
+
+ref cultureInfo en-US
+

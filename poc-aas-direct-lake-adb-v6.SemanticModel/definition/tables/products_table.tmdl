@@ -1,0 +1,285 @@
+table products_table
+	lineageTag: 12502da1-c221-4fd3-b7e1-21e6a0665a4a
+	sourceLineageTag: [dbo].[products_table]
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 234065e4-aa7c-4125-af5c-ab7f9c4401f9
+		sourceLineageTag: ProductKey
+		summarizeBy: count
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductLabel
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 89b3d972-ff10-4d58-b92c-d0a723e26904
+		sourceLineageTag: ProductLabel
+		summarizeBy: sum
+		sourceColumn: ProductLabel
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 53aa8575-7557-45b7-be25-b4efd8f091d1
+		sourceLineageTag: ProductName
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductDescription
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ffde6ced-bec3-4b80-b8e3-e741220e60bf
+		sourceLineageTag: ProductDescription
+		summarizeBy: none
+		sourceColumn: ProductDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductSubcategoryKey
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8bf46075-9a70-4635-b041-3d38dd7e3979
+		sourceLineageTag: ProductSubcategoryKey
+		summarizeBy: none
+		sourceColumn: ProductSubcategoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 29a6027f-8cce-4a75-a56c-7b17e08e8c48
+		sourceLineageTag: Manufacturer
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column BrandName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: c56272e4-b4d6-45f0-9249-c03c320eee16
+		sourceLineageTag: BrandName
+		summarizeBy: none
+		sourceColumn: BrandName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClassID
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 205dbe72-0395-42c2-9915-3b2698b83e74
+		sourceLineageTag: ClassID
+		summarizeBy: none
+		sourceColumn: ClassID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClassName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f08f21c5-b17a-4373-8470-59779b1c99ae
+		sourceLineageTag: ClassName
+		summarizeBy: none
+		sourceColumn: ClassName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StyleID
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e070a36d-2006-4119-b865-1da84919cc63
+		sourceLineageTag: StyleID
+		summarizeBy: none
+		sourceColumn: StyleID
+
+		annotation SummarizationSetBy = Automatic
+
+	column StyleName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 9ab875db-2a67-4a22-97b5-9d5ed2a6f93c
+		sourceLineageTag: StyleName
+		summarizeBy: none
+		sourceColumn: StyleName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ColorID
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 86d9734a-c578-4f97-95ab-e1aec40557cd
+		sourceLineageTag: ColorID
+		summarizeBy: none
+		sourceColumn: ColorID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ColorName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 20e1057e-b9fc-405c-9241-76bb16321035
+		sourceLineageTag: ColorName
+		summarizeBy: none
+		sourceColumn: ColorName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Size
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f0dc3afe-868a-44ef-a373-350e74551219
+		sourceLineageTag: Size
+		summarizeBy: none
+		sourceColumn: Size
+
+		annotation SummarizationSetBy = Automatic
+
+	column SizeRange
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 0cd01edf-70bf-4c0f-ba59-7399549d3804
+		sourceLineageTag: SizeRange
+		summarizeBy: none
+		sourceColumn: SizeRange
+
+		annotation SummarizationSetBy = Automatic
+
+	column SizeUnitMeasureID
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 66efcae7-2d8c-4880-9db8-adb4a1790e14
+		sourceLineageTag: SizeUnitMeasureID
+		summarizeBy: none
+		sourceColumn: SizeUnitMeasureID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weight
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 705127d9-d273-4a41-822f-bc36f9d911ee
+		sourceLineageTag: Weight
+		summarizeBy: none
+		sourceColumn: Weight
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeightUnitMeasureID
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: dbea32d2-6a1d-4b2f-8fdc-0a74f47df91f
+		sourceLineageTag: WeightUnitMeasureID
+		summarizeBy: none
+		sourceColumn: WeightUnitMeasureID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitOfMeasureID
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 06a8d54b-9e53-464e-8431-6f498c8d1328
+		sourceLineageTag: UnitOfMeasureID
+		summarizeBy: none
+		sourceColumn: UnitOfMeasureID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitOfMeasureName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8b9adfcf-9a75-4788-83c3-665b8b9a7605
+		sourceLineageTag: UnitOfMeasureName
+		summarizeBy: none
+		sourceColumn: UnitOfMeasureName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StockTypeID
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 912d119f-eb55-452b-9d06-ee7f843ea5d6
+		sourceLineageTag: StockTypeID
+		summarizeBy: none
+		sourceColumn: StockTypeID
+
+		annotation SummarizationSetBy = Automatic
+
+	column StockTypeName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5ae2b6ae-342b-4397-9425-6a8f46c401b7
+		sourceLineageTag: StockTypeName
+		summarizeBy: none
+		sourceColumn: StockTypeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitCost
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 939ba464-097f-4bd5-99cb-798f7e3913bb
+		sourceLineageTag: UnitCost
+		summarizeBy: none
+		sourceColumn: UnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 79b1807b-e30c-4558-bf13-1f8b18c2358a
+		sourceLineageTag: UnitPrice
+		summarizeBy: none
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvailableForSaleDate
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d5d2ac88-380e-499a-8288-fc22aae2aa2b
+		sourceLineageTag: AvailableForSaleDate
+		summarizeBy: none
+		sourceColumn: AvailableForSaleDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column StopSaleDate
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2194f880-76ad-4964-a7c9-972a6382dce1
+		sourceLineageTag: StopSaleDate
+		summarizeBy: none
+		sourceColumn: StopSaleDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 456e1585-0e68-498c-bdfd-c43cca7f889f
+		sourceLineageTag: Status
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition products_table = entity
+		mode: directLake
+		source
+			entityName: products_table
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,72 @@
+table sales_table
+	lineageTag: 103dd19b-a08f-4e6c-b826-8c53d156e337
+	sourceLineageTag: [dbo].[sales_table]
+
+	column OnlineSalesKey
+		dataType: int64
+		formatString: 0
+		lineageTag: e21d7b6d-e2b0-4013-86dd-9f323d93a9d0
+		summarizeBy: count
+		sourceColumn: OnlineSalesKey
+
+	column OrderDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 577933ef-dc52-42ba-a3fc-7f3faea4b351
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+	column DeliveryDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 19f1fdc5-fcd5-4672-8707-6204b9e90262
+		summarizeBy: none
+		sourceColumn: DeliveryDate
+
+	column StoreKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 58120e69-a831-43d4-9e2b-d4ffad50a6db
+		summarizeBy: count
+		sourceColumn: StoreKey
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 577a9570-4a7b-4000-ac68-addcc8aadd20
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+	column PromotionKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 0be1b53f-1723-4583-b208-7a5063a1aa79
+		summarizeBy: count
+		sourceColumn: PromotionKey
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 6d58b696-94b1-45fb-a39c-7353f55cc147
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+	column SalesOrderNumber
+		dataType: string
+		lineageTag: 40d9786c-13f2-473a-90fe-8648b738432d
+		summarizeBy: none
+		sourceColumn: SalesOrderNumber
+
+	column SalesOrderLineNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: b1fa1ec6-383c-4107-9f1d-382cc79aa74e
+		summarizeBy: sum
+		sourceColumn: SalesOrderLineNumber
+
+	partition sales_table = entity
+		mode: directLake
+		source
+			entityName: sales_table
+			expressionSource: DatabaseQuery
+

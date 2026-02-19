@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "poc-aas-direct-query-adb-dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5f5f0752-ddcc-b133-4c0b-75948fa55209"
+  }
+}

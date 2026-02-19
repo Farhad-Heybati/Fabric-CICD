@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "poc-aas-direct-query-adb-role-based"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7aa2fc28-1102-9deb-4053-819d09bd6ad8"
+  }
+}

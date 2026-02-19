@@ -1,0 +1,8 @@
+relationship Relationship
+	fromColumn: sales_table.CustomerKey
+	toColumn: customers_table.CustomerKey
+
+relationship 'Relationship 1'
+	fromColumn: sales_table.ProductKey
+	toColumn: products_table.ProductKey
+

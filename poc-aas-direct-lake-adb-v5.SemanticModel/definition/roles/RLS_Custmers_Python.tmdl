@@ -1,0 +1,5 @@
+role RLS_Custmers_Python
+	modelPermission: read
+
+	tablePermission customers_table = [CustomerKey] < 40
+
