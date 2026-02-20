@@ -1,0 +1,7 @@
+role cicd-read
+	modelPermission: read
+
+	tablePermission customers_table = [CustomerKey] < 100
+
+	annotation PBI_Id = ae6b06d322614a68b8997e3065cbf875
+

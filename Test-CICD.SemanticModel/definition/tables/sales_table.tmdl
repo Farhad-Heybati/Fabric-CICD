@@ -1,0 +1,100 @@
+table sales_table
+	lineageTag: ccf82a31-33df-4fc2-a981-7f85b3ffe84a
+	sourceLineageTag: [dbo].[sales_table]
+
+	column OnlineSalesKey
+		dataType: int64
+		formatString: 0
+		lineageTag: c48f7984-f9a5-4a7f-b329-539a389c3ad1
+		sourceLineageTag: OnlineSalesKey
+		summarizeBy: count
+		sourceColumn: OnlineSalesKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5707fb8f-4a98-43c5-a482-75088a7375ce
+		sourceLineageTag: OrderDate
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeliveryDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 46605852-2e68-405b-848a-b344c99cb4f3
+		sourceLineageTag: DeliveryDate
+		summarizeBy: none
+		sourceColumn: DeliveryDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoreKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f34b44a-c60a-41ba-8849-090b6f5849f2
+		sourceLineageTag: StoreKey
+		summarizeBy: count
+		sourceColumn: StoreKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 4d74d7fd-b142-4573-be1e-add8d17b44d5
+		sourceLineageTag: ProductKey
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PromotionKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c6e575b-18f0-4f46-96f7-2c2e1c52a842
+		sourceLineageTag: PromotionKey
+		summarizeBy: count
+		sourceColumn: PromotionKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f5142e9-801c-46db-9686-75b85f1f5475
+		sourceLineageTag: CustomerKey
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderNumber
+		dataType: string
+		lineageTag: 9995b4b3-1963-48a5-816f-57a4ed5c0aff
+		sourceLineageTag: SalesOrderNumber
+		summarizeBy: none
+		sourceColumn: SalesOrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderLineNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 46c163e0-9e62-4e83-87ad-d4b2cd418138
+		sourceLineageTag: SalesOrderLineNumber
+		summarizeBy: sum
+		sourceColumn: SalesOrderLineNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sales_table = entity
+		mode: directLake
+		source
+			entityName: sales_table
+			schemaName: dbo
+			expressionSource: 'DirectLake - demo_databricks_v4'
+

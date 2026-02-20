@@ -1,0 +1,10 @@
+relationship dc57c237-e41a-3689-1543-27c773a24024
+	relyOnReferentialIntegrity
+	fromColumn: sales_table.CustomerKey
+	toColumn: customers_table.CustomerKey
+
+relationship 13936d83-5bc4-a5a1-e352-1414e8053f4a
+	relyOnReferentialIntegrity
+	fromColumn: sales_table.ProductKey
+	toColumn: products_table.ProductKey
+
