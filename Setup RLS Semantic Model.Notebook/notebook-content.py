@@ -107,9 +107,9 @@ import requests
 # ---------------------------
 WORKSPACE_ID = "9d662f4d-ad03-4c16-82a4-8db29b422812"
 ITEM_ID      = "14a2a448-8899-4e51-993d-5bb03744c08c"             # Lakehouse / Warehouse / Mirrored DB item id
-ROLE_NAME    = "python_reader"
+ROLE_NAME    = "python_reader_v2"
 USER_UPN     = "RLS_User@MngEnvMCAP770244.onmicrosoft.com"
-TABLE_PATH   = "Tables/customers_table"  # OneLake security path to the table
+TABLE_PATH   = "Tables/poc_aas/customers_table"  # OneLake security path to the table
 DRY_RUN      = False                     # set True to validate without applying
 
 # ---------------------------
@@ -191,7 +191,7 @@ import requests
 # ====== Inputs ======
 WORKSPACE_ID = "9d662f4d-ad03-4c16-82a4-8db29b422812"
 ITEM_ID      = "14a2a448-8899-4e51-993d-5bb03744c08c"    # lakehouse/warehouse item id
-ROLE_NAME    = "pythonreader"
+ROLE_NAME    = "pythonreaderv2"
 
 # ====== SPECIFIC MEMBER (Entra) ======
 TENANT_ID = "867c7568-d5f5-4945-8db3-b9092ac63bac"
