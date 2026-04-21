@@ -6,11 +6,10 @@ on:
       - main
 
 jobs:
-  # ✅ 2. Deploy to TEST (only if DEV succeeds)
+  # ✅ 1. Deploy to TEST
   deploy-test:
     name: Deploy TEST
     runs-on: ubuntu-latest
-    needs: deploy-dev   # 🔥 makes it sequential
 
     env:
       FABRIC_ENV: test
@@ -35,19 +34,19 @@ jobs:
       - name: Deploy TEST
         run: python cicd/deploy_test.py
 
-  # ✅ 3. Deploy to PROD (only if TEST succeeds)
+  # ✅ 2. Deploy to PROD (only if TEST succeeds)
   deploy-prod:
     name: Deploy PROD
     runs-on: ubuntu-latest
-    needs: deploy-test   # 🔥 sequential again
+    needs: deploy-test
 
-    environment: production   # ✅ enables approval rules
+    environment: production   # ✅ approval gate
 
     env:
       FABRIC_ENV: prod
       FABRIC_WS_PROD: ${{ secrets.FABRIC_WS_PROD }}
 
-      FABRIC_ALLOW_PROD: true   # ✅ required by your script
+      FABRIC_ALLOW_PROD: true
 
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
