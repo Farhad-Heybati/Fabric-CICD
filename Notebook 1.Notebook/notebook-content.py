@@ -37,6 +37,17 @@ import json
 
 # CELL ********************
 
+print ("In notebook")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
 fabric.list_datasets()
 
 # METADATA ********************
