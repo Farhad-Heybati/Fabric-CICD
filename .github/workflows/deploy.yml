@@ -1,13 +1,41 @@
-from fabric_cicd import FabricWorkspace, publish_all_items
-from pathlib import Path
+name: Fabric CI/CD Deployment
 
-# Path to repo (where Fabric items are stored)
-repo_dir = Path(__file__).resolve().parent
+on:
+  push:
+    branches:
+      - main   # Trigger when code is merged to main
 
-# Example: deploy to DEV workspace
-workspace = FabricWorkspace(
-    workspace_id="264bcc77-2a0e-41a0-b12f-9e50ca2b6076",
-    repository_directory=str(repo_dir),
-)
+jobs:
+  deploy:
+    runs-on: ubuntu-latest   # GitHub runner (a VM)
 
-publish_all_items(workspace)
+    steps:
+
+    # ✅ Step 1 - Get your code
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # ✅ Step 2 - Setup Python
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    # ✅ Step 3 - Install dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install fabric-cicd
+
+    # ✅ Step 4 - Login (important for Fabric)
+    - name: Azure Login
+      run: |
+        az login --service-principal \
+        --username ${{ secrets.CLIENT_ID }} \
+        --password ${{ secrets.CLIENT_SECRET }} \
+        --tenant ${{ secrets.TENANT_ID }}
+
+    # ✅ Step 5 - Run deployment
+    - name: Deploy to Fabric
+      run: |
+        python deploy.py
