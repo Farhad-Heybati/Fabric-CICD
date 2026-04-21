@@ -6,34 +6,6 @@ on:
       - main
 
 jobs:
-  # ✅ 1. Deploy to DEV
-  deploy-dev:
-    name: Deploy DEV
-    runs-on: ubuntu-latest
-
-    env:
-      FABRIC_ENV: dev
-      FABRIC_WS_DEV: ${{ secrets.FABRIC_WS_DEV }}
-
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: pip install fabric-cicd azure-identity
-
-      - name: Deploy DEV
-        run: python cicd/deploy_dev.py
-
   # ✅ 2. Deploy to TEST (only if DEV succeeds)
   deploy-test:
     name: Deploy TEST
