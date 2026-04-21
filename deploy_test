@@ -1,13 +1,104 @@
-from fabric_cicd import FabricWorkspace, publish_all_items
+#!/usr/bin/env python3
+import logging
+import os
+import sys
+import time
 from pathlib import Path
 
-# Path to repo (where Fabric items are stored)
-repo_dir = Path(__file__).resolve().parent
+from azure.identity import ClientSecretCredential
+from fabric_cicd import FabricWorkspace, publish_all_items, unpublish_all_orphan_items  # 【1-e25b23】【2-10bce0】
 
-# Example: deploy to DEV workspace
-workspace = FabricWorkspace(
-    workspace_id="63ae0f23-068b-4c07-9c4e-ac890af97107",
-    repository_directory=str(repo_dir),
-)
+ENV_NAME = "test"
 
-publish_all_items(workspace)
+
+def setup_logging():
+    level = os.getenv("LOG_LEVEL", "INFO").upper()
+    logging.basicConfig(
+        level=getattr(logging, level, logging.INFO),
+        format="%(asctime)s %(levelname)s %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout)],
+    )
+
+
+def required(name: str) -> str:
+    v = os.getenv(name, "").strip()
+    if not v:
+        raise ValueError(f"Missing required environment variable: {name}")
+    return v
+
+
+def get_workspace_id() -> str:
+    # ✅ Uses your variable directly
+    return os.getenv("FABRIC_WS_TEST", "").strip()
+
+
+def get_repo_dir() -> Path:
+    repo_dir = Path(os.getenv("FABRIC_REPO_DIR", Path(__file__).resolve().parents[1])).resolve()
+    if not repo_dir.exists():
+        raise ValueError(f"Repository directory not found: {repo_dir}")
+    return repo_dir
+
+
+def token_credential() -> ClientSecretCredential:
+    return ClientSecretCredential(
+        tenant_id=required("AZURE_TENANT_ID"),
+        client_id=required("AZURE_CLIENT_ID"),
+        client_secret=required("AZURE_CLIENT_SECRET"),
+    )
+
+
+def run_deploy():
+    ws_id = get_workspace_id()
+    if not ws_id:
+        raise ValueError("FABRIC_WS_TEST is empty/missing.")
+
+    repo_dir = get_repo_dir()
+
+    # TEST: recommended to keep envs aligned; default cleanup_orphans to true
+    cleanup_orphans = os.getenv("FABRIC_CLEANUP_ORPHANS", "true").lower() == "true"
+    items_raw = os.getenv("FABRIC_ITEMS_IN_SCOPE", "").strip()
+    items_in_scope = [x.strip() for x in items_raw.split(",") if x.strip()] if items_raw else None
+
+    # Optional safety: require explicit marker
+    expected = os.getenv("FABRIC_ENV", ENV_NAME).strip().lower()
+    if expected not in ("test", "tst", "qa", "uat"):
+        raise PermissionError(f"Refusing TEST deploy: FABRIC_ENV must indicate test (got '{expected}')")
+
+    logging.info("TEST deploy starting workspace_id=%s repo_dir=%s", ws_id, repo_dir)
+
+    ws = FabricWorkspace(
+        workspace_id=ws_id,
+        repository_directory=str(repo_dir),
+        environment=ENV_NAME,
+        item_type_in_scope=items_in_scope,
+        token_credential=token_credential(),
+    )
+
+    publish_all_items(ws)  # 【1-e25b23】【2-10bce0】
+    logging.info("TEST publish completed")
+
+    if cleanup_orphans:
+        unpublish_all_orphan_items(ws)  # 【1-e25b23】【2-10bce0】
+        logging.info("TEST orphan cleanup completed")
+
+
+def main() -> int:
+    setup_logging()
+    retries = int(os.getenv("FABRIC_MAX_RETRIES", "3"))
+    sleep_s = int(os.getenv("FABRIC_RETRY_SLEEP", "10"))
+
+    for attempt in range(1, retries + 2):
+        try:
+            logging.info("TEST attempt %d/%d", attempt, retries + 1)
+            run_deploy()
+            return 0
+        except Exception as e:
+            logging.error("TEST deployment failed: %s", e, exc_info=True)
+            if attempt >= retries + 1:
+                return 1
+            logging.warning("Retrying TEST in %ds...", sleep_s)
+            time.sleep(sleep_s)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
