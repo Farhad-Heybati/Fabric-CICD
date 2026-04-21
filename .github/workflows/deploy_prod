@@ -1,0 +1,13 @@
+from fabric_cicd import FabricWorkspace, publish_all_items
+from pathlib import Path
+
+# Path to repo (where Fabric items are stored)
+repo_dir = Path(__file__).resolve().parent
+
+# Example: deploy to DEV workspace
+workspace = FabricWorkspace(
+    workspace_id="e57f34c4-c277-461a-b4b5-ca2f1196c8db",
+    repository_directory=str(repo_dir),
+)
+
+publish_all_items(workspace)
