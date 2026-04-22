@@ -30,6 +30,17 @@ jobs:
 
       - name: Install dependencies
         run: pip install fabric-cicd azure-identity
+      
+      - name: Debug environment
+        run: |
+          echo "===== CURRENT DIRECTORY ====="
+          pwd
+          
+          echo "===== LIST ALL FILES ====="
+          ls -R
+          
+          echo "===== SHOW PYTHON FILES ====="
+          find . -name "*.py"
 
       - name: Deploy TEST
         # run: python cicd/deploy_test.py
