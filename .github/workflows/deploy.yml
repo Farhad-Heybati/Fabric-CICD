@@ -32,7 +32,8 @@ jobs:
         run: pip install fabric-cicd azure-identity
 
       - name: Deploy TEST
-        run: python cicd/deploy_test.py
+        # run: python cicd/deploy_test.py
+        run: python deploy_test.py
 
   # ✅ 2. Deploy to PROD (only if TEST succeeds)
   deploy-prod:
@@ -65,4 +66,5 @@ jobs:
         run: pip install fabric-cicd azure-identity
 
       - name: Deploy PROD
-        run: python cicd/deploy_prod.py
+        # run: python cicd/deploy_prod.py
+        run: python deploy_test.py
