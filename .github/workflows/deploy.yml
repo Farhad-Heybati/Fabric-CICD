@@ -39,7 +39,7 @@ jobs:
           echo "===== LIST ALL FILES ====="
           ls -R
           
-          echo "===== SHOW PYTHON FILES ====="
+          echo "===== SHOW PYTHON FILES FHE ====="
           find . -name "*.py"
 
       - name: Deploy TEST
