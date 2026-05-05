@@ -22,42 +22,23 @@
 
 # CELL ********************
 
-
 %pip install semantic-link-sempy
 import sempy.fabric as fabric
 import json
 
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
 # CELL ********************
 
-print ("In notebook")
+print("===== NOTEBOOK LAKEHOUSE DEBUG =====")
+print("default_lakehouse_id:", fabric.get_lakehouse_id())
+print("default_lakehouse_name:", fabric.get_lakehouse_name())
+print("workspace_id:", fabric.get_workspace_id())
+print("workspace_name:", fabric.get_workspace_name())
+print("====================================")
 
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
+# Existing content
+print("In notebook")
 
 fabric.list_datasets()
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
 
 import json
 from sempy.fabric import execute_tmsl  # keep your existing import if different
@@ -98,19 +79,8 @@ execute_tmsl(
   workspace="Databricks-Gold-Sales-Customers-Products"
 )
 
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
 # Welcome to your new notebook
 # Type here in the cell editor to add code!
-
-
 
 import json
 
@@ -144,20 +114,3 @@ tmsl_text = json.dumps(tmsl)
 print(tmsl_text)
 
 fabric.execute_tmsl(tmsl, workspace="Databricks-Gold-Sales-Customers-Products")
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
