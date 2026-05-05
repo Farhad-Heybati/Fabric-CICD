@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import argparse
+import json
 import logging
 import os
 import sys
 import time
+import urllib.request
 from pathlib import Path
 
 from azure.identity import ClientSecretCredential
@@ -65,6 +67,46 @@ def token_credential() -> ClientSecretCredential:
     )
 
 
+def resolve_lakehouse_ids(ws_id: str, credential: ClientSecretCredential) -> dict:
+    """Query the Fabric REST API and return a mapping of Lakehouse name -> item id
+    for every Lakehouse deployed in the target workspace.
+
+    Logs each resolved mapping so the exact target IDs are visible in CI output.
+    Raises RuntimeError if no Lakehouses are found.
+    """
+    token = credential.get_token("https://api.fabric.microsoft.com/.default").token
+    url = f"https://api.fabric.microsoft.com/v1/workspaces/{ws_id}/items?type=Lakehouse"
+    req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode())
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode(errors="replace")
+        raise RuntimeError(
+            f"Fabric API returned HTTP {exc.code} when listing Lakehouses in workspace {ws_id}: {body}"
+        ) from exc
+
+    mapping: dict = {}
+    for item in data.get("value", []):
+        name = item.get("displayName", "")
+        item_id = item.get("id", "")
+        if name and item_id:
+            mapping[name] = item_id
+            logging.info(
+                "Resolved Lakehouse '%s' -> id=%s in target workspace %s",
+                name,
+                item_id,
+                ws_id,
+            )
+
+    if not mapping:
+        raise RuntimeError(
+            f"No Lakehouses found in target workspace {ws_id} after Lakehouse publish phase. "
+            "Ensure at least one Lakehouse item exists in the repository and was published successfully."
+        )
+    return mapping
+
+
 def run_deploy(parameter_file: str | None = None):
     ws_id = get_workspace_id()
     if not ws_id:
@@ -116,20 +158,60 @@ def run_deploy(parameter_file: str | None = None):
         parameter_file,
     )
 
-    ws_kwargs = dict(
+    # Create a single credential instance shared across all API calls.
+    cred = token_credential()
+
+    # Base kwargs shared by both deploy phases.
+    base_kwargs = dict(
         workspace_id=ws_id,
         repository_directory=str(repo_dir),
         environment=ENV_NAME,
-        item_type_in_scope=items_in_scope,
-        token_credential=token_credential(),
+        token_credential=cred,
     )
+
+    ws_kwargs = dict(base_kwargs)
+    ws_kwargs["item_type_in_scope"] = items_in_scope
 
     # Pass parameter file through to fabric-cicd if provided.
     if parameter_file:
         ws_kwargs["parameter_file"] = parameter_file
 
-    ws = FabricWorkspace(**ws_kwargs)
+    # ---------------------------------------------------------------------------
+    # Phase 1: Publish Lakehouses first so they exist in the target workspace
+    # before notebooks (which reference them) are published.
+    # ---------------------------------------------------------------------------
+    scope_includes_lakehouse = items_in_scope is None or "Lakehouse" in items_in_scope
+    if scope_includes_lakehouse:
+        logging.info("Phase 1: Publishing Lakehouses to target workspace...")
+        lh_ws = FabricWorkspace(
+            **base_kwargs,
+            item_type_in_scope=["Lakehouse"],
+        )
+        publish_all_items(lh_ws)
+        logging.info("Phase 1: Lakehouses published successfully.")
 
+        # Resolve deployed Lakehouse IDs from the target workspace and log them
+        # so the mapping is visible in CI output and references can be verified.
+        lh_mapping = resolve_lakehouse_ids(ws_id, cred)
+        logging.info(
+            "Lakehouse ID mapping resolved (%d Lakehouse(s) available for notebook references):",
+            len(lh_mapping),
+        )
+        for lh_name, lh_id in lh_mapping.items():
+            logging.info("  '%s' -> %s", lh_name, lh_id)
+    else:
+        logging.info(
+            "Lakehouse not in items_in_scope (%s); skipping Phase 1 Lakehouse pre-publish.",
+            items_in_scope,
+        )
+
+    # ---------------------------------------------------------------------------
+    # Phase 2: Publish all items in scope.  Lakehouses published in Phase 1 will
+    # be detected as already-current and skipped or updated idempotently.
+    # Notebooks will now find their referenced Lakehouses in the workspace.
+    # ---------------------------------------------------------------------------
+    logging.info("Phase 2: Publishing all items in scope...")
+    ws = FabricWorkspace(**ws_kwargs)
     publish_all_items(ws)
     logging.info("TEST publish completed")
 
