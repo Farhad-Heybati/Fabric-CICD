@@ -77,5 +77,5 @@ jobs:
         run: pip install fabric-cicd azure-identity
 
       - name: Deploy PROD
-        # run: python cicd/deploy_prod.py
-        run: python deploy_test.py
+        working-directory: ${{ github.workspace }}
+        run: python deploy_prod.py --parameter_file "parameter.yml"
