@@ -37,7 +37,7 @@ jobs:
           pwd
           
           echo "===== LIST ALL FILES ====="
-          ls "*parameter*"
+          ls *parameter*
           
           echo "===== SHOW PYTHON FILES FHE ====="
           find . -name "*.py"
