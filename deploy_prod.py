@@ -1,5 +1,174 @@
-# Existing content of the deploy_prod file
-# Assuming deploy_prod contains Python code
+#!/usr/bin/env python3
+import argparse
+import logging
+import os
+import sys
+import time
+from pathlib import Path
 
-# Placeholder for the content
-print("Deploying to production...")
+from azure.identity import ClientSecretCredential
+from fabric_cicd import FabricWorkspace, publish_all_items, unpublish_all_orphan_items
+
+ENV_NAME = "prod"
+
+
+def setup_logging():
+    level = os.getenv("LOG_LEVEL", "INFO").upper()
+    logging.basicConfig(
+        level=getattr(logging, level, logging.INFO),
+        format="%(asctime)s %(levelname)s %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout)],
+    )
+
+
+def required(name: str) -> str:
+    v = os.getenv(name, "").strip()
+    if not v:
+        raise ValueError(f"Missing required environment variable: {name}")
+    return v
+
+
+def get_workspace_id() -> str:
+    return os.getenv("FABRIC_WS_PROD", "").strip()
+
+
+def get_repo_dir() -> Path:
+    """Return the repository root directory.
+
+    In GitHub Actions, the checked-out repository root is typically:
+      $GITHUB_WORKSPACE == /home/runner/work/<repo>/<repo>
+
+    This script lives in the repo root, so the safest default is the directory
+    containing this file, not a parent directory.
+
+    Users can override via FABRIC_REPO_DIR.
+    """
+    override = os.getenv("FABRIC_REPO_DIR", "").strip()
+    if override:
+        repo_dir = Path(override).expanduser().resolve()
+    else:
+        repo_dir = Path(__file__).resolve().parent
+
+    if not repo_dir.exists():
+        raise ValueError(f"Repository directory not found: {repo_dir}")
+    return repo_dir
+
+
+def token_credential() -> ClientSecretCredential:
+    return ClientSecretCredential(
+        tenant_id=required("AZURE_TENANT_ID"),
+        client_id=required("AZURE_CLIENT_ID"),
+        client_secret=required("AZURE_CLIENT_SECRET"),
+    )
+
+
+def assert_prod_allowed():
+    """
+    Strong guardrail:
+    - Require FABRIC_ALLOW_PROD=true
+    - Require FABRIC_ENV indicates prod
+    This prevents accidental production deployments.
+    """
+    allow = os.getenv("FABRIC_ALLOW_PROD", "false").strip().lower() == "true"
+    if not allow:
+        raise PermissionError("Refusing PROD deploy: set FABRIC_ALLOW_PROD=true")
+
+    env_marker = os.getenv("FABRIC_ENV", "").strip().lower()
+    if env_marker not in ("prod", "prd", "production"):
+        raise PermissionError(f"Refusing PROD deploy: FABRIC_ENV must indicate prod (got '{env_marker}')")
+
+
+def run_deploy(parameter_file: str | None = None):
+    assert_prod_allowed()
+
+    ws_id = get_workspace_id()
+    if not ws_id:
+        raise ValueError("FABRIC_WS_PROD is empty/missing.")
+
+    repo_dir = get_repo_dir()
+
+    # PROD: strongly recommended true to avoid drift
+    cleanup_orphans = os.getenv("FABRIC_CLEANUP_ORPHANS", "true").lower() == "true"
+
+    # Allow scoping via env var (comma-separated item types)
+    items_raw = os.getenv("FABRIC_ITEMS_IN_SCOPE", "").strip()
+    items_in_scope = [x.strip() for x in items_raw.split(",") if x.strip()] if items_raw else None
+
+    # Skip semantic models by default (same as test) to avoid import errors.
+    # Set FABRIC_PUBLISH_SEMANTIC_MODELS=true to re-enable.
+    publish_semantic_models = os.getenv("FABRIC_PUBLISH_SEMANTIC_MODELS", "false").lower() == "true"
+    if not publish_semantic_models:
+        if items_in_scope is None:
+            items_in_scope = [
+                "Report",
+                "Notebook",
+                "Lakehouse",
+                "Warehouse",
+                "DataPipeline",
+                "Environment",
+                "KQLDatabase",
+            ]
+            logging.warning(
+                "Semantic model publishing is disabled (FABRIC_PUBLISH_SEMANTIC_MODELS=false). "
+                "Deploying only item types: %s",
+                items_in_scope,
+            )
+
+    logging.info(
+        "PROD deploy starting workspace_id=%s repo_dir=%s parameter_file=%s",
+        ws_id,
+        repo_dir,
+        parameter_file,
+    )
+
+    ws_kwargs = dict(
+        workspace_id=ws_id,
+        repository_directory=str(repo_dir),
+        environment=ENV_NAME,
+        item_type_in_scope=items_in_scope,
+        token_credential=token_credential(),
+    )
+
+    if parameter_file:
+        ws_kwargs["parameter_file"] = parameter_file
+
+    ws = FabricWorkspace(**ws_kwargs)
+
+    publish_all_items(ws)
+    logging.info("PROD publish completed")
+
+    if cleanup_orphans:
+        unpublish_all_orphan_items(ws)
+        logging.info("PROD orphan cleanup completed")
+
+
+def main() -> int:
+    setup_logging()
+
+    parser = argparse.ArgumentParser(description="Deploy Fabric items to PROD workspace")
+    parser.add_argument(
+        "--parameter_file",
+        default=os.getenv("FABRIC_PARAMETER_FILE", "").strip() or None,
+        help="Path to parameter YAML file (e.g., parameter.yml) used for find/replace during publish.",
+    )
+    args = parser.parse_args()
+
+    retries = int(os.getenv("FABRIC_MAX_RETRIES", "3"))
+    sleep_s = int(os.getenv("FABRIC_RETRY_SLEEP", "10"))
+
+    for attempt in range(1, retries + 2):
+        try:
+            logging.info("PROD attempt %d/%d", attempt, retries + 1)
+            run_deploy(parameter_file=args.parameter_file)
+            return 0
+        except Exception as e:
+            logging.error("PROD deployment failed: %s", e, exc_info=True)
+            if attempt >= retries + 1:
+                return 1
+            logging.warning("Retrying PROD in %ds...", sleep_s)
+            time.sleep(sleep_s)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+

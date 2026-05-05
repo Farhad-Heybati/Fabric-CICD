@@ -4,30 +4,35 @@ find_replace:
   - find_value: "9d662f4d-ad03-4c16-82a4-8db29b422812"
     replace_value:
       test: "$workspace.$id"
+      prod: "$workspace.$id"
     item_type: "Notebook"
     file_path: "Notebook 1.Notebook/notebook-content.py"
 
   - find_value: "9d662f4d-ad03-4c16-82a4-8db29b422812"
     replace_value:
       test: "$workspace.$id"
+      prod: "$workspace.$id"
     item_type: "Notebook"
     file_path: "Setup RLS Semantic Model.Notebook/notebook-content.py"
 
   - find_value: "9d662f4d-ad03-4c16-82a4-8db29b422812"
     replace_value:
       test: "$workspace.$id"
+      prod: "$workspace.$id"
     item_type: "Notebook"
     file_path: "Migration to Direct Lake.Notebook/notebook-content.py"
 
   - find_value: "9d662f4d-ad03-4c16-82a4-8db29b422812"
     replace_value:
       test: "$workspace.$id"
+      prod: "$workspace.$id"
     item_type: "Notebook"
     file_path: "Historique/Migration to Direct Lake mirrored.Notebook/notebook-content.py"
 
   - find_value: "9d662f4d-ad03-4c16-82a4-8db29b422812"
     replace_value:
       test: "$workspace.$id"
+      prod: "$workspace.$id"
     item_type: "Notebook"
     file_path: "Notebook_test_ci_cd_push.Notebook/notebook-content.py"
 
@@ -36,23 +41,45 @@ find_replace:
   - find_value: "00dad5e5-d945-4e22-8ba4-49fbc9845d98"
     replace_value:
       test: "$items.Lakehouse.demo_databricks_v4.$id"
+      prod: "$items.Lakehouse.demo_databricks_v4.$id"
     item_type: "Notebook"
     file_path: "Notebook 1.Notebook/notebook-content.py"
 
   - find_value: "00dad5e5-d945-4e22-8ba4-49fbc9845d98"
     replace_value:
       test: "$items.Lakehouse.demo_databricks_v4.$id"
+      prod: "$items.Lakehouse.demo_databricks_v4.$id"
     item_type: "Notebook"
     file_path: "Setup RLS Semantic Model.Notebook/notebook-content.py"
 
   - find_value: "00dad5e5-d945-4e22-8ba4-49fbc9845d98"
     replace_value:
       test: "$items.Lakehouse.demo_databricks_v4.$id"
+      prod: "$items.Lakehouse.demo_databricks_v4.$id"
     item_type: "Notebook"
     file_path: "Migration to Direct Lake.Notebook/notebook-content.py"
 
   - find_value: "00dad5e5-d945-4e22-8ba4-49fbc9845d98"
     replace_value:
       test: "$items.Lakehouse.demo_databricks_v4.$id"
+      prod: "$items.Lakehouse.demo_databricks_v4.$id"
     item_type: "Notebook"
     file_path: "Historique/Migration to Direct Lake mirrored.Notebook/notebook-content.py"
+
+  # Rebind test-CICD-05052026-14h24 notebook: replace Dev workspace ID with target workspace ID
+  # Dev workspace ID: 04e2a7df-2bff-4029-922b-ec4facdecbf8
+  - find_value: "04e2a7df-2bff-4029-922b-ec4facdecbf8"
+    replace_value:
+      test: "$workspace.$id"
+      prod: "$workspace.$id"
+    item_type: "Notebook"
+    file_path: "test-CICD-05052026-14h24.Notebook/notebook-content.py"
+
+  # Rebind test-CICD-05052026-14h24 notebook: replace Dev lakehouse ID with target lakehouse ID
+  # Dev lakehouse ID: 2f40a2b0-44be-4ecb-89fa-f8120d810d9f (demo_cicd_lkh in Dev workspace)
+  - find_value: "2f40a2b0-44be-4ecb-89fa-f8120d810d9f"
+    replace_value:
+      test: "$items.Lakehouse.demo_cicd_lkh.$id"
+      prod: "$items.Lakehouse.demo_cicd_lkh.$id"
+    item_type: "Notebook"
+    file_path: "test-CICD-05052026-14h24.Notebook/notebook-content.py"
