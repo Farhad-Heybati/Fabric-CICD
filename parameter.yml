@@ -31,6 +31,23 @@ find_replace:
     item_type: "Notebook"
     file_path: "Notebook_test_ci_cd_push.Notebook/notebook-content.py"
 
+  # --------------------------------------------------------------------------------------
+  # CHANGE (2026-05-05): Replace workspace id in test-CICD-05052026-14h24 notebook metadata
+  # Old behavior: this notebook would keep the DEV workspace id (04e2a7df-...) when deployed.
+  # New behavior: always replace it with the target workspace id for TEST/PROD.
+  # --------------------------------------------------------------------------------------
+  # - find_value: "04e2a7df-2bff-4029-922b-ec4facdecbf8"   # OLD: DEV workspace id referenced by notebook
+  #   replace_value:
+  #     test: "$workspace.$id"                            # NEW: target workspace id
+  #   item_type: "Notebook"
+  #   file_path: "test-CICD-05052026-14h24.Notebook/notebook-content.py"
+
+  - find_value: "04e2a7df-2bff-4029-922b-ec4facdecbf8"   # DEV workspace id referenced by notebook
+    replace_value:
+      test: "$workspace.$id"                            # target workspace id
+    item_type: "Notebook"
+    file_path: "test-CICD-05052026-14h24.Notebook/notebook-content.py"
+
   # Replace DEV lakehouse ID(s) by resolving the target lakehouse ID by NAME (per notebook relationship)
   # These notebooks reference lakehouse id 00dad5e5... with default_lakehouse_name = demo_databricks_v4
   - find_value: "00dad5e5-d945-4e22-8ba4-49fbc9845d98"
@@ -56,3 +73,23 @@ find_replace:
       test: "$items.Lakehouse.demo_databricks_v4.$id"
     item_type: "Notebook"
     file_path: "Historique/Migration to Direct Lake mirrored.Notebook/notebook-content.py"
+
+  # --------------------------------------------------------------------------------------
+  # CHANGE (2026-05-05): Replace the notebook's default lakehouse id by resolving the target lakehouse id by NAME.
+  # This updates the notebook metadata field:
+  #   dependencies.lakehouse.default_lakehouse
+  # Old value in notebook: 2f40a2b0-44be-4ecb-89fa-f8120d810d9f
+  # Old lakehouse name in notebook: demo_cicd_lkh
+  # New value at deploy time: $items.Lakehouse.demo_cicd_lkh.$id
+  # --------------------------------------------------------------------------------------
+  # - find_value: "2f40a2b0-44be-4ecb-89fa-f8120d810d9f"   # OLD: hardcoded lakehouse id in notebook
+  #   replace_value:
+  #     test: "$items.Lakehouse.demo_cicd_lkh.$id"          # NEW: resolve lakehouse id in target workspace
+  #   item_type: "Notebook"
+  #   file_path: "test-CICD-05052026-14h24.Notebook/notebook-content.py"
+
+  - find_value: "2f40a2b0-44be-4ecb-89fa-f8120d810d9f"   # hardcoded lakehouse id in notebook
+    replace_value:
+      test: "$items.Lakehouse.demo_cicd_lkh.$id"          # resolve lakehouse id in target workspace
+    item_type: "Notebook"
+    file_path: "test-CICD-05052026-14h24.Notebook/notebook-content.py"
