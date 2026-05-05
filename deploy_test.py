@@ -68,13 +68,13 @@ def token_credential() -> ClientSecretCredential:
     )
 
 
-def get_repo_lakehouses(repo_dir: Path) -> dict[str, str]:
+def get_repo_lakehouses(repo_dir: Path) -> set[str]:
     """Scan the repository for Lakehouse item definitions.
 
-    Returns a dict of {display_name: display_name} for every Lakehouse found
-    under a ``*.Lakehouse/.platform`` file in the repository.
+    Returns the set of display names for every Lakehouse found under a
+    ``*.Lakehouse/.platform`` file in the repository.
     """
-    result: dict[str, str] = {}
+    result: set[str] = set()
     for platform_file in repo_dir.rglob(".platform"):
         if not platform_file.parent.name.endswith(".Lakehouse"):
             continue
@@ -83,7 +83,7 @@ def get_repo_lakehouses(repo_dir: Path) -> dict[str, str]:
             if data.get("metadata", {}).get("type") != "Lakehouse":
                 continue
             name = data["metadata"]["displayName"]
-            result[name] = name
+            result.add(name)
             logging.info("Repo lakehouse discovered: displayName=%s", name)
         except (KeyError, json.JSONDecodeError) as exc:
             logging.warning("Could not parse lakehouse platform file %s: %s", platform_file, exc)
@@ -142,7 +142,7 @@ def build_lakehouse_mapping(repo_dir: Path) -> tuple[dict[str, str], set[str]]:
             is associated with conflicting names across notebooks.
     """
     repo_lakehouses = get_repo_lakehouses(repo_dir)
-    logging.info("Repo lakehouses available: %s", sorted(repo_lakehouses.keys()))
+    logging.info("Repo lakehouses available: %s", sorted(repo_lakehouses))
 
     id_to_name: dict[str, str] = {}
     workspace_ids: set[str] = set()
@@ -177,7 +177,7 @@ def build_lakehouse_mapping(repo_dir: Path) -> tuple[dict[str, str], set[str]]:
                 raise ValueError(
                     f"Notebook '{rel_path}' references default lakehouse '{default_name}' "
                     f"(id={default_id}) which is not found as a Lakehouse item in the "
-                    f"repository.  Available repo lakehouses: {sorted(repo_lakehouses.keys())}"
+                    f"repository.  Available repo lakehouses: {sorted(repo_lakehouses)}"
                 )
             existing_name = id_to_name.get(default_id)
             if existing_name and existing_name != default_name:
@@ -313,12 +313,10 @@ def run_deploy(parameter_file: str | None = None):
     auto_param_path: str | None = None
     try:
         if param_yaml:
-            tmp = tempfile.NamedTemporaryFile(
-                mode="w", suffix=".yml", delete=False, prefix="fabric_params_"
-            )
-            tmp.write(param_yaml)
-            tmp.close()
-            auto_param_path = tmp.name
+            fd, auto_param_path = tempfile.mkstemp(suffix=".yml", prefix="fabric_params_")
+            os.close(fd)
+            os.chmod(auto_param_path, 0o600)
+            Path(auto_param_path).write_text(param_yaml, encoding="utf-8")
             logging.info(
                 "Auto-generated parameter file written to %s:\n%s",
                 auto_param_path,
