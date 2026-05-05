@@ -6,12 +6,6 @@ on:
       - main
 
 jobs:
-- run: |
-    pwd
-    ls -la
-    ls -la "${{ github.workspace }}"
-    test -f parameter.yml && echo "parameter.yml found"
-    
   # ✅ 1. Deploy to TEST
   deploy-test:
     name: Deploy TEST
