@@ -44,7 +44,7 @@ jobs:
 
       - name: Deploy TEST
         # run: python cicd/deploy_test.py
-        run: python deploy_test.py  --parameter_file parameter.yml
+        run: python deploy_test.py --parameter_file "${{ github.workspace }}/parameter.yml"
 
   # ✅ 2. Deploy to PROD (only if TEST succeeds)
   deploy-prod:
