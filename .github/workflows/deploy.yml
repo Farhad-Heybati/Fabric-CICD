@@ -33,7 +33,7 @@ jobs:
       
       - name: Debug environment
         run: |
-          echo "===== FHE CURRENT DIRECTORY ====="
+          echo "===== FHE2 CURRENT DIRECTORY ====="
           pwd
           
           echo "===== LIST ALL FILES ====="
