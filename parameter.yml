@@ -1,57 +1,10 @@
-find_replace:
-
-  # Replace DEV workspace ID Fhe
-  - find_value: "9d662f4d-ad03-4c16-82a4-8db29b422812"
-    replace_value:
-      test: "$workspace.$id"
-    item_type: "Notebook"
-    file_path: "Notebook 1.Notebook/notebook-content.py"
-
-  - find_value: "9d662f4d-ad03-4c16-82a4-8db29b422812"
-    replace_value:
-      test: "$workspace.$id"
-    item_type: "Notebook"
-    file_path: "Setup RLS Semantic Model.Notebook/notebook-content.py"
-
-  - find_value: "9d662f4d-ad03-4c16-82a4-8db29b422812"
-    replace_value:
-      test: "$workspace.$id"
-    item_type: "Notebook"
-    file_path: "Migration to Direct Lake.Notebook/notebook-content.py"
-
-  - find_value: "9d662f4d-ad03-4c16-82a4-8db29b422812"
-    replace_value:
-      test: "$workspace.$id"
-    item_type: "Notebook"
-    file_path: "Historique/Migration to Direct Lake mirrored.Notebook/notebook-content.py"
-
-  - find_value: "9d662f4d-ad03-4c16-82a4-8db29b422812"
-    replace_value:
-      test: "$workspace.$id"
-    item_type: "Notebook"
-    file_path: "Notebook_test_ci_cd_push.Notebook/notebook-content.py"
-
-  # Replace DEV lakehouse ID
-  - find_value: "00dad5e5-d945-4e22-8ba4-49fbc9845d98"
-    replace_value:
-      test: "$items.Lakehouse.MyLakehouse.$id"
-    item_type: "Notebook"
-    file_path: "Notebook 1.Notebook/notebook-content.py"
-
-  - find_value: "00dad5e5-d945-4e22-8ba4-49fbc9845d98"
-    replace_value:
-      test: "$items.Lakehouse.MyLakehouse.$id"
-    item_type: "Notebook"
-    file_path: "Setup RLS Semantic Model.Notebook/notebook-content.py"
-
-  - find_value: "00dad5e5-d945-4e22-8ba4-49fbc9845d98"
-    replace_value:
-      test: "$items.Lakehouse.MyLakehouse.$id"
-    item_type: "Notebook"
-    file_path: "Migration to Direct Lake.Notebook/notebook-content.py"
-
-  - find_value: "00dad5e5-d945-4e22-8ba4-49fbc9845d98"
-    replace_value:
-      test: "$items.Lakehouse.MyLakehouse.$id"
-    item_type: "Notebook"
-    file_path: "Historique/Migration to Direct Lake mirrored.Notebook/notebook-content.py"
+# Lakehouse bindings and workspace ID replacements are now auto-detected from the
+# repository by deploy_test.py (see build_lakehouse_mapping / generate_parameter_yaml).
+# Add custom find_replace rules here only if you need overrides beyond what is
+# automatically generated.
+#
+# find_replace:
+#   - find_value: "some-literal-value"
+#     replace_value:
+#       test: "replacement"
+#     item_type: "Notebook"
