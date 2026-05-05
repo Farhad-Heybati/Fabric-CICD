@@ -34,7 +34,24 @@ def get_workspace_id() -> str:
 
 
 def get_repo_dir() -> Path:
-    repo_dir = Path(os.getenv("FABRIC_REPO_DIR", Path(__file__).resolve().parents[1])).resolve()
+    """Return the repository root directory.
+
+    In GitHub Actions, the checked-out repository root is typically:
+      $GITHUB_WORKSPACE == /home/runner/work/<repo>/<repo>
+
+    This script lives in the repo root, so the safest default is the directory
+    containing this file, not a parent directory.
+
+    Users can override via FABRIC_REPO_DIR.
+    """
+
+    # Prefer explicit override.
+    override = os.getenv("FABRIC_REPO_DIR", "").strip()
+    if override:
+        repo_dir = Path(override).expanduser().resolve()
+    else:
+        repo_dir = Path(__file__).resolve().parent
+
     if not repo_dir.exists():
         raise ValueError(f"Repository directory not found: {repo_dir}")
     return repo_dir
