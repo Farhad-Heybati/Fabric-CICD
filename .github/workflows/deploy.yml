@@ -5,8 +5,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
-  # ✅ 1. Deploy to TEST
+  # ── 1. Deploy to TEST ────────────────────────────────────────────────────────
   deploy-test:
     name: Deploy TEST
     runs-on: ubuntu-latest
@@ -14,7 +17,6 @@ jobs:
     env:
       FABRIC_ENV: test
       FABRIC_WS_TEST: ${{ secrets.FABRIC_WS_TEST }}
-
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -24,42 +26,26 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install dependencies
         run: pip install fabric-cicd azure-identity
-      
-      - name: Debug environment
-        run: |
-          echo "===== CURRENT DIRECTORY ====="
-          pwd
-          
-          echo "===== LIST ALL FILES ====="
-          ls -R
-          
-          echo "===== SHOW PYTHON FILES FHE ====="
-          find . -name "*.py"
 
       - name: Deploy TEST
-        # run: python cicd/deploy_test.py
-        run: python deploy_test.py  --parameter_file parameter.yml
+        run: python deploy_test.py
 
-  # ✅ 2. Deploy to PROD (only if TEST succeeds)
-  deploy-prod:
-    name: Deploy PROD
+  # ── 2. Validate TEST workspace ───────────────────────────────────────────────
+  #     Runs ONLY after a successful TEST deploy.
+  #     Exits non-zero on failure, which blocks the PROD job below.
+  validate-test:
+    name: Validate TEST
     runs-on: ubuntu-latest
-    needs: deploy-test
-
-    environment: production   # ✅ approval gate
+    needs: deploy-test   # only runs when deploy-test succeeds
 
     env:
-      FABRIC_ENV: prod
-      FABRIC_WS_PROD: ${{ secrets.FABRIC_WS_PROD }}
-
-      FABRIC_ALLOW_PROD: true
-
+      FABRIC_WS_TEST: ${{ secrets.FABRIC_WS_TEST }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -69,7 +55,43 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install fabric-cicd azure-identity
+
+      - name: Validate TEST workspace
+        run: python validate_test.py
+
+  # ── 3. Deploy to PROD ────────────────────────────────────────────────────────
+  #     Runs ONLY after validate-test succeeds.
+  #     The `environment: production` gate adds an optional manual-approval
+  #     step (configure reviewers in Settings → Environments → production).
+  deploy-prod:
+    name: Deploy PROD
+    runs-on: ubuntu-latest
+    needs: validate-test   # blocked until validation passes
+
+    environment: production   # optional manual-approval gate
+
+    env:
+      FABRIC_ENV: prod
+      FABRIC_WS_PROD: ${{ secrets.FABRIC_WS_PROD }}
+      # Explicit opt-in flag required by deploy_prod.py guardrail.
+      # Only set here, after deploy-test and validate-test have both succeeded.
+      FABRIC_PROMOTE_TO_PROD: "true"
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -77,5 +99,4 @@ jobs:
         run: pip install fabric-cicd azure-identity
 
       - name: Deploy PROD
-        # run: python cicd/deploy_prod.py
-        run: python deploy_test.py
+        run: python deploy_prod.py
