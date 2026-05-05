@@ -47,35 +47,35 @@ jobs:
         run: python deploy_test.py --parameter_file "parameter.yml"
 
   # ✅ 2. Deploy to PROD (only if TEST succeeds)
-  deploy-prod:
-    name: Deploy PROD
-    runs-on: ubuntu-latest
-    needs: deploy-test
-
-    environment: production   # ✅ approval gate
-
-    env:
-      FABRIC_ENV: prod
-      FABRIC_WS_PROD: ${{ secrets.FABRIC_WS_PROD }}
-
-      FABRIC_ALLOW_PROD: true
-
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: pip install fabric-cicd azure-identity
-
-      - name: Deploy PROD
-        # run: python cicd/deploy_prod.py
-        run: python deploy_test.py
+  # deploy-prod:
+  #   name: Deploy PROD
+  #   runs-on: ubuntu-latest
+  #   needs: deploy-test
+  #
+  #   environment: production   # ✅ approval gate
+  #
+  #   env:
+  #     FABRIC_ENV: prod
+  #     FABRIC_WS_PROD: ${{ secrets.FABRIC_WS_PROD }}
+  #
+  #     FABRIC_ALLOW_PROD: true
+  #
+  #     AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  #     AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  #     AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  #
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v4
+  #
+  #     - name: Setup Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: "3.11"
+  #
+  #     - name: Install dependencies
+  #       run: pip install fabric-cicd azure-identity
+  #
+  #     - name: Deploy PROD
+  #       # run: python cicd/deploy_prod.py
+  #       run: python deploy_test.py
