@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 
 from azure.identity import ClientSecretCredential
-from fabric_cicd import FabricWorkspace, publish_all_items, unpublish_all_orphan_items  # 【1-e25b23】【2-10bce0】
+from fabric_cicd import FabricWorkspace, publish_all_items, unpublish_all_orphan_items  # 1-e25b232-10bce0
 
 ENV_NAME = "test"
 
@@ -28,7 +28,7 @@ def required(name: str) -> str:
 
 
 def get_workspace_id() -> str:
-    # ✅ Uses your variable directly
+    #  Uses your variable directly
     return os.getenv("FABRIC_WS_TEST", "").strip()
 
 
@@ -56,8 +56,27 @@ def run_deploy():
 
     # TEST: recommended to keep envs aligned; default cleanup_orphans to true
     cleanup_orphans = os.getenv("FABRIC_CLEANUP_ORPHANS", "true").lower() == "true"
+
+    # Allow scoping via env var (comma-separated item types)
     items_raw = os.getenv("FABRIC_ITEMS_IN_SCOPE", "").strip()
     items_in_scope = [x.strip() for x in items_raw.split(",") if x.strip()] if items_raw else None
+
+    # Skip a known-bad semantic model by restricting the scope to everything *except*
+    # semantic models. This prevents the pipeline from failing on import errors like:
+    # Dataset_Import_FailedToImportDataset for 'poc-aas-direct-lake-adb'.
+    #
+    # If you later fix the model, set FABRIC_PUBLISH_SEMANTIC_MODELS=true to re-enable.
+    publish_semantic_models = os.getenv("FABRIC_PUBLISH_SEMANTIC_MODELS", "false").lower() == "true"
+    if not publish_semantic_models:
+        # Only override when user didn't already set scope explicitly.
+        if items_in_scope is None:
+            # Typical Fabric item type names used by fabric-cicd are like 'Report', 'Notebook', 'SemanticModel', etc.
+            items_in_scope = ["Report", "Notebook", "Lakehouse", "Warehouse", "DataPipeline", "Environment", "KQLDatabase"]
+            logging.warning(
+                "Semantic model publishing is disabled (FABRIC_PUBLISH_SEMANTIC_MODELS=false). "
+                "Deploying only item types: %s",
+                items_in_scope,
+            )
 
     # Optional safety: require explicit marker
     expected = os.getenv("FABRIC_ENV", ENV_NAME).strip().lower()
@@ -74,11 +93,11 @@ def run_deploy():
         token_credential=token_credential(),
     )
 
-    publish_all_items(ws)  # 【1-e25b23】【2-10bce0】
+    publish_all_items(ws)  # 1-e25b232-10bce0
     logging.info("TEST publish completed")
 
     if cleanup_orphans:
-        unpublish_all_orphan_items(ws)  # 【1-e25b23】【2-10bce0】
+        unpublish_all_orphan_items(ws)  # 1-e25b232-10bce0
         logging.info("TEST orphan cleanup completed")
 
 
