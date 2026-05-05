@@ -43,6 +43,7 @@ jobs:
           find . -name "*.py"
 
       - name: Deploy TEST
+        # Changed 2026-05-05 13:50 by copilot: use github.workspace to locate parameter.yml reliably
         # run: python cicd/deploy_test.py
         run: python deploy_test.py --parameter_file "${{ github.workspace }}/parameter.yml"
 
